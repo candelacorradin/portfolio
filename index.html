@@ -806,7 +806,7 @@
     .lead-pillar:last-child { border-bottom: none; }
   }
 
-  /* Implementations — text-based case studies */
+  /* Implementations — visual case studies */
   .impl-list {
     list-style: none;
     padding: 0;
@@ -815,44 +815,55 @@
   }
   .impl {
     display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 2rem;
-    padding: 2.5rem 0;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 2.5rem;
+    padding: 3rem 0;
     border-bottom: 0.5px solid var(--rule);
     align-items: start;
+    position: relative;
   }
   .impl__num {
+    position: absolute;
+    top: 3rem;
+    right: 0;
     font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
+    font-size: 10px;
+    letter-spacing: 0.15em;
     color: var(--muted);
-    padding-top: 6px;
   }
+  .impl__visual {
+    width: 100%;
+    aspect-ratio: 5/3;
+    background: #E8E6DF;
+    border: 0.5px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  .impl__body { padding-right: 3rem; }
   .impl__category {
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent-dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
   .impl__title {
     font-family: var(--sans);
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.018em;
     color: var(--ink);
     margin-bottom: 1.5rem;
-    line-height: 1.25;
+    line-height: 1.2;
   }
   .impl__row {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 1.5rem;
-    padding: 1rem 0;
+    grid-template-columns: 90px 1fr;
+    gap: 1.25rem;
+    padding: 0.85rem 0;
     border-top: 0.5px solid var(--rule);
   }
-  .impl__row:first-of-type { border-top: 0.5px solid var(--rule); }
   .impl__label {
     font-family: var(--mono);
     font-size: 10px;
@@ -863,8 +874,8 @@
   }
   .impl__text {
     font-family: var(--serif);
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.65;
     color: var(--ink);
   }
   .impl__text code {
@@ -880,7 +891,7 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 5px;
   }
   .impl__tags li {
     font-family: var(--mono);
@@ -889,7 +900,98 @@
     text-transform: uppercase;
     color: var(--muted);
     border: 0.5px solid var(--rule);
-    padding: 3px 8px;
+    padding: 3px 7px;
+  }
+
+  /* Diagram visual (impl 02) */
+  .impl__diagram {
+    width: 100%;
+    height: 100%;
+    background: #E8E6DF;
+    display: block;
+  }
+  .impl__diagram svg { display: block; width: 100%; height: 100%; }
+
+  /* Before/After slider */
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .slider__pane {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+  .slider__pane svg { display: block; width: 100%; height: 100%; }
+  .slider__pane--after {
+    clip-path: inset(0 0 0 50%);
+    transition: clip-path 0.05s linear;
+  }
+  .slider__handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 0;
+    transform: translateX(-50%);
+    transition: left 0.05s linear;
+    pointer-events: none;
+  }
+  .slider__handle-bar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 1px;
+    background: var(--ink);
+    transform: translateX(-50%);
+  }
+  .slider__handle-knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--off-white);
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .slider__label {
+    position: absolute;
+    top: 12px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(245,243,238,0.85);
+    padding: 4px 8px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .slider__label--before { left: 12px; }
+  .slider__label--after { right: 12px; }
+
+  @media (max-width: 900px) {
+    .impl { grid-template-columns: 1fr; gap: 1.5rem; }
+    .impl__num { position: static; margin-bottom: 0.5rem; }
+    .impl__body { padding-right: 0; }
+  }
+  @media (max-width: 640px) {
+    .impl__row { grid-template-columns: 1fr; gap: 0.4rem; padding: 0.75rem 0; }
   }
 
   /* Deliverables — visual cards */
@@ -1366,10 +1468,10 @@
     </div>
 
     <p class="practice-intro">
-      Front-end implementation engineering — scoped CSS and JavaScript layered into
-      live, component-based platforms. <em>No HTML changes, no rebuilds.</em>
-      A discipline of working within constraints to ship production-grade results
-      on a 24-hour clock.
+      Front-end implementation engineering — <em>working within platform constraints
+      to ship flexible, scalable solutions.</em> Scoped CSS and JavaScript layered into
+      live, component-based environments. No HTML changes, no rebuilds. A discipline
+      built around reusable systems and a 24-hour delivery clock.
     </p>
 
     <!-- DEMO -->
@@ -1420,8 +1522,57 @@
     </div>
     <ol class="impl-list" role="list">
 
+      <!-- 01 — Hero specificity slider -->
       <li class="impl">
         <span class="impl__num">01</span>
+        <div class="impl__visual">
+          <div class="slider" data-slider>
+            <div class="slider__pane slider__pane--before">
+              <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%">
+                <!-- Before: hero with clipped/missing shadow layer -->
+                <rect x="0" y="0" width="400" height="240" fill="#E8E6DF"/>
+                <!-- clipped wrapper boundary -->
+                <rect x="20" y="30" width="360" height="180" fill="#F5F3EE" stroke="rgba(26,25,22,0.18)" stroke-width="0.6"/>
+                <!-- hero content blocks -->
+                <rect x="40" y="58" width="150" height="9" fill="rgba(26,25,22,0.55)"/>
+                <rect x="40" y="74" width="120" height="9" fill="rgba(26,25,22,0.55)"/>
+                <rect x="40" y="92" width="180" height="5" fill="rgba(26,25,22,0.25)"/>
+                <rect x="40" y="103" width="160" height="5" fill="rgba(26,25,22,0.25)"/>
+                <rect x="40" y="125" width="78" height="22" fill="rgba(26,25,22,0.85)"/>
+                <!-- empty image area (no shadow rendering) -->
+                <rect x="240" y="58" width="120" height="120" fill="rgba(26,25,22,0.12)"/>
+                <!-- annotation -->
+                <line x1="240" y1="178" x2="360" y2="178" stroke="rgba(216,108,90,0.5)" stroke-width="0.5" stroke-dasharray="2 2"/>
+                <text x="300" y="200" font-family="DM Mono, monospace" font-size="9" fill="rgba(216,108,90,0.75)" text-anchor="middle" letter-spacing="0.5">SHADOW CLIPPED</text>
+              </svg>
+            </div>
+            <div class="slider__pane slider__pane--after">
+              <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%">
+                <!-- After: layered hero with shadow rendering correctly -->
+                <rect x="0" y="0" width="400" height="240" fill="#E8E6DF"/>
+                <!-- decorative shadow / pseudo layer rendered behind -->
+                <rect x="252" y="70" width="120" height="120" fill="#8A7460" opacity="0.35"/>
+                <!-- main wrapper -->
+                <rect x="20" y="30" width="360" height="180" fill="#F5F3EE" stroke="rgba(26,25,22,0.18)" stroke-width="0.6"/>
+                <!-- hero content -->
+                <rect x="40" y="58" width="150" height="9" fill="rgba(26,25,22,0.85)"/>
+                <rect x="40" y="74" width="120" height="9" fill="rgba(26,25,22,0.85)"/>
+                <rect x="40" y="92" width="180" height="5" fill="rgba(26,25,22,0.35)"/>
+                <rect x="40" y="103" width="160" height="5" fill="rgba(26,25,22,0.35)"/>
+                <rect x="40" y="125" width="78" height="22" fill="#8A7460"/>
+                <!-- image with layered shadow visible -->
+                <rect x="240" y="58" width="120" height="120" fill="rgba(26,25,22,0.18)"/>
+                <text x="300" y="205" font-family="DM Mono, monospace" font-size="9" fill="rgba(138,116,96,0.9)" text-anchor="middle" letter-spacing="0.5">::BEFORE LAYERED</text>
+              </svg>
+            </div>
+            <div class="slider__handle" data-slider-handle>
+              <div class="slider__handle-bar"></div>
+              <div class="slider__handle-knob"><span>↔</span></div>
+            </div>
+            <div class="slider__label slider__label--before">Before</div>
+            <div class="slider__label slider__label--after">After</div>
+          </div>
+        </div>
         <div class="impl__body">
           <p class="impl__category">Hero refinement · Visual implementation</p>
           <h3 class="impl__title">Specificity-safe visual polish on a Tailwind hero</h3>
@@ -1439,8 +1590,57 @@
         </div>
       </li>
 
+      <!-- 02 — SPA lifecycle diagram -->
       <li class="impl">
         <span class="impl__num">02</span>
+        <div class="impl__visual">
+          <div class="impl__diagram">
+            <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%">
+              <rect x="0" y="0" width="400" height="240" fill="#E8E6DF"/>
+
+              <!-- Lifecycle loop diagram -->
+              <!-- init() node -->
+              <rect x="56" y="50" width="92" height="42" fill="#F5F3EE" stroke="rgba(26,25,22,0.5)" stroke-width="0.7"/>
+              <text x="102" y="68" font-family="DM Mono, monospace" font-size="9" fill="rgba(26,25,22,0.45)" text-anchor="middle" letter-spacing="1">PHASE A</text>
+              <text x="102" y="83" font-family="Syne, sans-serif" font-size="12" font-weight="700" fill="rgba(26,25,22,0.9)" text-anchor="middle">init()</text>
+
+              <!-- MutationObserver node -->
+              <rect x="252" y="50" width="92" height="42" fill="#F5F3EE" stroke="rgba(26,25,22,0.5)" stroke-width="0.7"/>
+              <text x="298" y="68" font-family="DM Mono, monospace" font-size="9" fill="rgba(26,25,22,0.45)" text-anchor="middle" letter-spacing="1">PHASE B</text>
+              <text x="298" y="83" font-family="Syne, sans-serif" font-size="12" font-weight="700" fill="rgba(26,25,22,0.9)" text-anchor="middle">observe()</text>
+
+              <!-- destroy() node -->
+              <rect x="252" y="160" width="92" height="42" fill="#F5F3EE" stroke="rgba(26,25,22,0.5)" stroke-width="0.7"/>
+              <text x="298" y="178" font-family="DM Mono, monospace" font-size="9" fill="rgba(26,25,22,0.45)" text-anchor="middle" letter-spacing="1">PHASE C</text>
+              <text x="298" y="193" font-family="Syne, sans-serif" font-size="12" font-weight="700" fill="rgba(26,25,22,0.9)" text-anchor="middle">destroy()</text>
+
+              <!-- route change trigger -->
+              <rect x="56" y="160" width="92" height="42" fill="#8A7460" stroke="#8A7460"/>
+              <text x="102" y="178" font-family="DM Mono, monospace" font-size="9" fill="#F5F3EE" text-anchor="middle" letter-spacing="1" opacity="0.7">TRIGGER</text>
+              <text x="102" y="193" font-family="Syne, sans-serif" font-size="12" font-weight="700" fill="#F5F3EE" text-anchor="middle">route△</text>
+
+              <!-- Arrows -->
+              <!-- init → observe -->
+              <line x1="148" y1="71" x2="248" y2="71" stroke="rgba(26,25,22,0.4)" stroke-width="0.7" stroke-dasharray="3 2"/>
+              <polygon points="248,71 242,68 242,74" fill="rgba(26,25,22,0.4)"/>
+
+              <!-- observe → destroy (cycle) -->
+              <line x1="298" y1="92" x2="298" y2="158" stroke="rgba(26,25,22,0.4)" stroke-width="0.7" stroke-dasharray="3 2"/>
+              <polygon points="298,158 295,152 301,152" fill="rgba(26,25,22,0.4)"/>
+
+              <!-- destroy → trigger -->
+              <line x1="252" y1="181" x2="152" y2="181" stroke="rgba(26,25,22,0.4)" stroke-width="0.7" stroke-dasharray="3 2"/>
+              <polygon points="152,181 158,178 158,184" fill="rgba(26,25,22,0.4)"/>
+
+              <!-- trigger → init (loop) -->
+              <line x1="102" y1="158" x2="102" y2="94" stroke="#8A7460" stroke-width="0.9" stroke-dasharray="3 2"/>
+              <polygon points="102,94 99,100 105,100" fill="#8A7460"/>
+
+              <!-- caption -->
+              <text x="200" y="225" font-family="DM Mono, monospace" font-size="9" fill="rgba(26,25,22,0.45)" text-anchor="middle" letter-spacing="1.5">IDEMPOTENT LIFECYCLE LOOP</text>
+            </svg>
+          </div>
+        </div>
         <div class="impl__body">
           <p class="impl__category">Dynamic behavior · SPA architecture</p>
           <h3 class="impl__title">SPA-safe interactive behavior on a component platform</h3>
@@ -1458,8 +1658,47 @@
         </div>
       </li>
 
+      <!-- 03 — Geolocation slider -->
       <li class="impl">
         <span class="impl__num">03</span>
+        <div class="impl__visual">
+          <div class="slider" data-slider>
+            <div class="slider__pane slider__pane--before">
+              <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%">
+                <rect x="0" y="0" width="400" height="240" fill="#E8E6DF"/>
+                <rect x="20" y="30" width="360" height="180" fill="#F5F3EE" stroke="rgba(26,25,22,0.18)" stroke-width="0.6"/>
+                <!-- Generic, non-personalized copy -->
+                <text x="40" y="80" font-family="Syne, sans-serif" font-size="16" font-weight="800" fill="rgba(26,25,22,0.85)" letter-spacing="-0.5">Find a location</text>
+                <text x="40" y="108" font-family="Libre Baskerville, serif" font-size="11" fill="rgba(26,25,22,0.55)">Visit one of our many</text>
+                <text x="40" y="124" font-family="Libre Baskerville, serif" font-size="11" fill="rgba(26,25,22,0.55)">locations across the country.</text>
+                <rect x="40" y="152" width="100" height="22" fill="rgba(26,25,22,0.18)"/>
+                <text x="90" y="167" font-family="DM Mono, monospace" font-size="9" fill="rgba(26,25,22,0.5)" text-anchor="middle" letter-spacing="1.5">SEARCH</text>
+                <!-- placeholder label -->
+                <text x="370" y="195" font-family="DM Mono, monospace" font-size="9" fill="rgba(216,108,90,0.75)" text-anchor="end" letter-spacing="1">GENERIC</text>
+              </svg>
+            </div>
+            <div class="slider__pane slider__pane--after">
+              <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%">
+                <rect x="0" y="0" width="400" height="240" fill="#E8E6DF"/>
+                <rect x="20" y="30" width="360" height="180" fill="#F5F3EE" stroke="rgba(26,25,22,0.18)" stroke-width="0.6"/>
+                <!-- Region-resolved copy -->
+                <text x="40" y="80" font-family="Syne, sans-serif" font-size="16" font-weight="800" fill="rgba(26,25,22,0.95)" letter-spacing="-0.5">Visit our Austin location</text>
+                <text x="40" y="108" font-family="Libre Baskerville, serif" font-size="11" fill="rgba(26,25,22,0.7)">South Lamar · open daily,</text>
+                <text x="40" y="124" font-family="Libre Baskerville, serif" font-size="11" fill="rgba(26,25,22,0.7)">7am to 9pm CT.</text>
+                <rect x="40" y="152" width="120" height="22" fill="#8A7460"/>
+                <text x="100" y="167" font-family="DM Mono, monospace" font-size="9" fill="#F5F3EE" text-anchor="middle" letter-spacing="1.5">DIRECTIONS</text>
+                <!-- resolved label -->
+                <text x="370" y="195" font-family="DM Mono, monospace" font-size="9" fill="rgba(138,116,96,0.9)" text-anchor="end" letter-spacing="1">RESOLVED · TX</text>
+              </svg>
+            </div>
+            <div class="slider__handle" data-slider-handle>
+              <div class="slider__handle-bar"></div>
+              <div class="slider__handle-knob"><span>↔</span></div>
+            </div>
+            <div class="slider__label slider__label--before">Before</div>
+            <div class="slider__label slider__label--after">After</div>
+          </div>
+        </div>
         <div class="impl__body">
           <p class="impl__category">Personalization · Geolocation</p>
           <h3 class="impl__title">Region-aware content swaps without server rendering</h3>
@@ -1489,14 +1728,65 @@
       <article class="deliv">
         <div class="deliv__sketch">
           <svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <rect x="24" y="20" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="116" y="20" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="208" y="20" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="300" y="20" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="24" y="112" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="116" y="112" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="208" y="112" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="300" y="112" width="80" height="80" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <!-- Filter bar -->
+            <line x1="20" y1="28" x2="380" y2="28" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <rect x="20" y="12" width="56" height="14" fill="#8A7460"/>
+            <rect x="82" y="12" width="42" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <rect x="130" y="12" width="42" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <rect x="178" y="12" width="42" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <!-- Search icon on right -->
+            <circle cx="365" cy="19" r="5" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <line x1="368" y1="22" x2="372" y2="26" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+
+            <!-- Product grid 4×2 -->
+            <g>
+              <rect x="20" y="44" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="20" y="44" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="28" y="106" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="28" y="113" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="111" y="44" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="111" y="44" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="119" y="106" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="119" y="113" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="202" y="44" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="202" y="44" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="210" y="106" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="210" y="113" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="293" y="44" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="293" y="44" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="301" y="106" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="301" y="113" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="20" y="133" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="20" y="133" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="28" y="195" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="28" y="202" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="111" y="133" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="111" y="133" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="119" y="195" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="119" y="202" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="202" y="133" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="202" y="133" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="210" y="195" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="210" y="202" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
+            <g>
+              <rect x="293" y="133" width="82" height="80" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+              <rect x="293" y="133" width="82" height="56" fill="rgba(26,25,22,0.15)"/>
+              <rect x="301" y="195" width="44" height="3" fill="rgba(26,25,22,0.45)"/>
+              <rect x="301" y="202" width="28" height="2" fill="rgba(26,25,22,0.25)"/>
+            </g>
           </svg>
         </div>
         <div class="deliv__body">
@@ -1512,12 +1802,40 @@
       <article class="deliv">
         <div class="deliv__sketch">
           <svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <circle cx="200" cy="112" r="72" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="4 2"/>
-            <circle cx="200" cy="112" r="28" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8"/>
-            <line x1="200" y1="40" x2="200" y2="184" stroke="rgba(26,25,22,0.32)" stroke-width="0.5" stroke-dasharray="2 2"/>
-            <line x1="128" y1="112" x2="272" y2="112" stroke="rgba(26,25,22,0.32)" stroke-width="0.5" stroke-dasharray="2 2"/>
-            <line x1="149" y1="61" x2="251" y2="163" stroke="rgba(26,25,22,0.32)" stroke-width="0.5" stroke-dasharray="2 2"/>
-            <line x1="149" y1="163" x2="251" y2="61" stroke="rgba(26,25,22,0.32)" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <!-- Concentric process wheel -->
+            <circle cx="200" cy="112" r="78" fill="none" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <circle cx="200" cy="112" r="58" fill="none" stroke="rgba(26,25,22,0.25)" stroke-width="0.5" stroke-dasharray="3 3"/>
+            <circle cx="200" cy="112" r="32" fill="#8A7460"/>
+            <circle cx="200" cy="112" r="32" fill="none" stroke="rgba(26,25,22,0.5)" stroke-width="0.5"/>
+
+            <!-- 6 spokes -->
+            <line x1="200" y1="34" x2="200" y2="80" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+            <line x1="200" y1="144" x2="200" y2="190" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+            <line x1="267" y1="73" x2="227" y2="96" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+            <line x1="267" y1="151" x2="227" y2="128" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+            <line x1="133" y1="73" x2="173" y2="96" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+            <line x1="133" y1="151" x2="173" y2="128" stroke="rgba(26,25,22,0.4)" stroke-width="0.5"/>
+
+            <!-- Node dots at outer ring -->
+            <circle cx="200" cy="34" r="4" fill="rgba(26,25,22,0.55)"/>
+            <circle cx="267" cy="73" r="4" fill="rgba(26,25,22,0.55)"/>
+            <circle cx="267" cy="151" r="4" fill="rgba(26,25,22,0.55)"/>
+            <circle cx="200" cy="190" r="4" fill="rgba(26,25,22,0.55)"/>
+            <circle cx="133" cy="151" r="4" fill="rgba(26,25,22,0.55)"/>
+            <circle cx="133" cy="73" r="4" fill="rgba(26,25,22,0.55)"/>
+
+            <!-- Tab strip on left -->
+            <rect x="14" y="80" width="38" height="14" fill="#8A7460"/>
+            <rect x="14" y="98" width="38" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <rect x="14" y="116" width="38" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+            <rect x="14" y="134" width="38" height="14" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.6"/>
+
+            <!-- Stat tickers on right -->
+            <text x="348" y="98" font-family="Syne, sans-serif" font-size="13" font-weight="800" fill="rgba(26,25,22,0.7)" text-anchor="middle">98%</text>
+            <line x1="334" y1="104" x2="362" y2="104" stroke="rgba(26,25,22,0.25)" stroke-width="0.5"/>
+            <text x="348" y="124" font-family="Syne, sans-serif" font-size="13" font-weight="800" fill="rgba(26,25,22,0.7)" text-anchor="middle">12k</text>
+            <line x1="334" y1="130" x2="362" y2="130" stroke="rgba(26,25,22,0.25)" stroke-width="0.5"/>
+            <text x="348" y="150" font-family="Syne, sans-serif" font-size="13" font-weight="800" fill="rgba(26,25,22,0.7)" text-anchor="middle">5.0</text>
           </svg>
         </div>
         <div class="deliv__body">
@@ -1533,13 +1851,54 @@
       <article class="deliv">
         <div class="deliv__sketch">
           <svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <rect x="24" y="18" width="352" height="40" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="24" y="72" width="168" height="72" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="208" y="72" width="168" height="72" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="24" y="158" width="80" height="48" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="118" y="158" width="80" height="48" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="212" y="158" width="80" height="48" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
-            <rect x="306" y="158" width="70" height="48" fill="none" stroke="rgba(26,25,22,0.32)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <!-- Page header -->
+            <rect x="20" y="14" width="360" height="32" fill="rgba(26,25,22,0.85)"/>
+            <rect x="32" y="26" width="60" height="8" fill="#F5F3EE"/>
+            <rect x="280" y="26" width="40" height="8" fill="rgba(245,243,238,0.5)"/>
+            <rect x="332" y="26" width="40" height="8" fill="rgba(245,243,238,0.5)"/>
+
+            <!-- Two main columns -->
+            <rect x="20" y="56" width="174" height="76" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <rect x="30" y="66" width="80" height="5" fill="rgba(26,25,22,0.55)"/>
+            <rect x="30" y="76" width="120" height="3" fill="rgba(26,25,22,0.25)"/>
+            <rect x="30" y="83" width="100" height="3" fill="rgba(26,25,22,0.25)"/>
+            <rect x="30" y="90" width="110" height="3" fill="rgba(26,25,22,0.25)"/>
+            <rect x="30" y="112" width="50" height="14" fill="#8A7460"/>
+
+            <rect x="206" y="56" width="174" height="76" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <!-- Map illustration -->
+            <line x1="206" y1="84" x2="380" y2="84" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <line x1="206" y1="108" x2="380" y2="108" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <line x1="252" y1="56" x2="252" y2="132" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <line x1="306" y1="56" x2="306" y2="132" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <circle cx="288" cy="92" r="5" fill="#8A7460"/>
+            <polygon points="288,97 285,102 291,102" fill="#8A7460"/>
+
+            <!-- Four-tile bottom strip -->
+            <rect x="20" y="146" width="84" height="60" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <rect x="30" y="156" width="40" height="4" fill="rgba(26,25,22,0.45)"/>
+            <rect x="30" y="166" width="60" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="30" y="172" width="50" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="30" y="188" width="36" height="10" fill="rgba(26,25,22,0.55)"/>
+
+            <rect x="112" y="146" width="84" height="60" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <rect x="122" y="156" width="40" height="4" fill="rgba(26,25,22,0.45)"/>
+            <rect x="122" y="166" width="60" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="122" y="172" width="50" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="122" y="188" width="36" height="10" fill="rgba(26,25,22,0.55)"/>
+
+            <!-- Highlighted middle card -->
+            <rect x="204" y="146" width="84" height="60" fill="#8A7460"/>
+            <rect x="214" y="156" width="40" height="4" fill="rgba(245,243,238,0.85)"/>
+            <rect x="214" y="166" width="60" height="3" fill="rgba(245,243,238,0.55)"/>
+            <rect x="214" y="172" width="50" height="3" fill="rgba(245,243,238,0.55)"/>
+            <rect x="214" y="188" width="36" height="10" fill="#F5F3EE"/>
+
+            <rect x="296" y="146" width="84" height="60" fill="rgba(26,25,22,0.07)" stroke="rgba(26,25,22,0.18)" stroke-width="0.5"/>
+            <rect x="306" y="156" width="40" height="4" fill="rgba(26,25,22,0.45)"/>
+            <rect x="306" y="166" width="60" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="306" y="172" width="50" height="3" fill="rgba(26,25,22,0.22)"/>
+            <rect x="306" y="188" width="36" height="10" fill="rgba(26,25,22,0.55)"/>
           </svg>
         </div>
         <div class="deliv__body">
@@ -1877,11 +2236,16 @@
           on a <em>24-hour</em> delivery clock.
         </h3>
         <p class="lead-body">
-          My team ships front-end implementation work for U.S.-based clients on
-          an AI-driven proprietary platform. I built the operational scaffolding
-          — reusable code systems, AI-assisted workflows, scoped delivery
-          patterns — that lets a small team move at agency scale without losing
-          consistency or quality.
+          My team handles high-volume website customization across multiple
+          U.S.-based client accounts on an AI-driven proprietary platform.
+          I translate client requests into scalable implementation solutions —
+          coordinating prioritization, delivery, and quality across customer
+          success, design, and engineering needs.
+        </p>
+        <p class="lead-body" style="margin-top: 1.25rem;">
+          The work is built on reusable override systems, internal code resources,
+          and documentation-first workflows that let a small distributed team
+          operate with minimal supervision and consistent quality.
         </p>
       </div>
 
@@ -1905,17 +2269,17 @@
       <div class="lead-pillar">
         <span class="lead-pillar__num">A</span>
         <h4 class="lead-pillar__title">Reusable systems</h4>
-        <p class="lead-pillar__text">Component libraries, override patterns, and snippet templates that compound across clients — every delivery makes the next one faster.</p>
+        <p class="lead-pillar__text">Override patterns, snippet libraries, and internal code resources that compound across clients. Every delivery makes the next one faster — and more consistent.</p>
       </div>
       <div class="lead-pillar">
         <span class="lead-pillar__num">B</span>
-        <h4 class="lead-pillar__title">AI-assisted delivery</h4>
-        <p class="lead-pillar__text">Prompted workflows and LLM-augmented review embedded into the production pipeline — without sacrificing the human judgment that makes work feel considered.</p>
+        <h4 class="lead-pillar__title">AI as operational tool</h4>
+        <p class="lead-pillar__text">AI-assisted iteration combined with manual review. Claude embedded into debugging, documentation, and implementation logic — applied to operational scalability, not just creative output.</p>
       </div>
       <div class="lead-pillar">
         <span class="lead-pillar__num">C</span>
-        <h4 class="lead-pillar__title">Async-first operations</h4>
-        <p class="lead-pillar__text">Documentation, handoff rituals, and decision logs designed for a distributed team — clarity travels, not meetings.</p>
+        <h4 class="lead-pillar__title">Documentation-first ops</h4>
+        <p class="lead-pillar__text">Async-by-default workflows. Decision logs, handoff rituals, and internal references that let a distributed team move autonomously — clarity travels, not meetings.</p>
       </div>
     </div>
   </div>
@@ -1935,12 +2299,12 @@
         <div>
           <h3 class="work-role">Lead Site Specialist</h3>
           <p class="work-company">Rebolt</p>
-          <p class="work-desc">Lead a team of five within Customer Success delivering implementation work for U.S.-based clients on an AI-driven proprietary platform. Built reusable systems and AI-assisted workflows that meaningfully reduced delivery time and increased consistency at scale.</p>
+          <p class="work-desc">Lead a remote team of five within Customer Success, coordinating high-volume website customization across multiple U.S.-based client accounts on an AI-driven proprietary platform. Built reusable override systems, internal code resources, and AI-assisted workflows that scale implementation work without losing consistency.</p>
         </div>
         <div class="work-tags">
           <span class="work-tag">Team Lead</span>
           <span class="work-tag">Implementation</span>
-          <span class="work-tag">Ops</span>
+          <span class="work-tag">Ops Systems</span>
         </div>
       </div>
 
@@ -2002,8 +2366,9 @@
         but as raw material.
       </p>
       <p class="video-body">
-        I include this as evidence of the R&D habit. Productive curiosity about
-        new tools, applied before the playbook exists.
+        I treat AI as both a <em>creative and operational tool</em>. The same
+        curiosity that drove this work now shows up in how my team ships client
+        implementations daily.
       </p>
       <p class="video-note">Rotoscopy Study · 2023</p>
     </div>
@@ -2031,33 +2396,34 @@
         <p class="skill-label">Operations</p>
         <ul class="skill-list">
           <li>Remote team leadership</li>
-          <li>Delivery systems</li>
-          <li>Workflow optimization</li>
+          <li>Cross-functional coordination</li>
+          <li>High-volume request management</li>
+          <li>Delivery prioritization</li>
+          <li>Documentation-first workflows</li>
           <li>Async collaboration</li>
-          <li>Process documentation</li>
-          <li>Customer experience</li>
-          <li>Cross-functional partnership</li>
+          <li>Customer success partnership</li>
         </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-label">Implementation</p>
         <ul class="skill-list">
           <li>Front-end implementation</li>
+          <li>Reusable override systems</li>
           <li>Scoped CSS architecture</li>
           <li>SPA-compatible JavaScript</li>
           <li>Design token systems</li>
-          <li>Responsive systems</li>
           <li>Third-party integrations</li>
         </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-label">AI-Native Practice</p>
         <ul class="skill-list">
-          <li>LLM-assisted delivery</li>
+          <li>AI-assisted implementation</li>
+          <li>LLM-augmented review</li>
           <li>Prompt engineering</li>
-          <li>AI workflow design</li>
           <li>Claude / Cursor / Copilot</li>
-          <li>R&D experimentation</li>
+          <li>Operational AI workflows</li>
+          <li>Generative R&D</li>
         </ul>
       </div>
     </div>
@@ -2171,6 +2537,82 @@
       });
     }, { threshold: 0.4 });
     io.observe(demo);
+  })();
+</script>
+
+<script>
+  // Before/After sliders
+  (function () {
+    const sliders = document.querySelectorAll('[data-slider]');
+    sliders.forEach(function (slider) {
+      const after = slider.querySelector('.slider__pane--after');
+      const handle = slider.querySelector('.slider__handle');
+      if (!after || !handle) return;
+
+      let isDragging = false;
+
+      function setPosition(percent) {
+        const clamped = Math.max(0, Math.min(100, percent));
+        after.style.clipPath = 'inset(0 0 0 ' + clamped + '%)';
+        handle.style.left = clamped + '%';
+      }
+
+      function getPercent(clientX) {
+        const rect = slider.getBoundingClientRect();
+        return ((clientX - rect.left) / rect.width) * 100;
+      }
+
+      function start(e) {
+        isDragging = true;
+        slider.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+      function end() {
+        isDragging = false;
+        slider.style.cursor = 'ew-resize';
+      }
+      function move(e) {
+        if (!isDragging) return;
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        setPosition(getPercent(x));
+      }
+
+      // mousedown anywhere on slider also moves to that point
+      slider.addEventListener('mousedown', function (e) {
+        start(e);
+        setPosition(getPercent(e.clientX));
+      });
+      slider.addEventListener('touchstart', function (e) {
+        start(e);
+        setPosition(getPercent(e.touches[0].clientX));
+      }, { passive: false });
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, { passive: true });
+      document.addEventListener('mouseup', end);
+      document.addEventListener('touchend', end);
+
+      // gentle auto-reveal on first viewport entry
+      let revealed = false;
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !revealed) {
+            revealed = true;
+            // animate slider from 100 → 50 to draw the eye
+            let pos = 95;
+            const interval = setInterval(function () {
+              pos -= 1.5;
+              setPosition(pos);
+              if (pos <= 50) {
+                clearInterval(interval);
+                setPosition(50);
+              }
+            }, 16);
+          }
+        });
+      }, { threshold: 0.5 });
+      io.observe(slider);
+    });
   })();
 </script>
 
