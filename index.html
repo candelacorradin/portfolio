@@ -43,17 +43,42 @@
     align-items: center;
     padding: 1.2rem 3rem;
     background: var(--off-white);
-    border-bottom: 0.5px solid var(--rule);
+    border-bottom: 0.5px solid transparent;
+    transition: border-color 0.35s ease;
+  }
+
+  nav.is-scrolled {
+    border-bottom-color: var(--rule);
   }
 
   .nav-logo {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
     text-decoration: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  nav.is-scrolled .nav-logo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-logo__first {
+    font-family: var(--sans);
+    font-weight: 800;
+  }
+
+  .nav-logo__last {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-dark);
   }
 
   .nav-links {
@@ -102,11 +127,11 @@
 
   .hero-name {
     font-family: var(--sans);
-    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-size: clamp(3.5rem, 7.5vw, 7.5rem);
     font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 2rem;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin-bottom: 2.5rem;
   }
 
   .hero-name em {
@@ -114,6 +139,10 @@
     font-style: italic;
     font-weight: 400;
     color: var(--accent-dark);
+    font-size: 0.78em;
+    letter-spacing: -0.025em;
+    display: block;
+    margin-top: 0.15em;
   }
 
   .hero-tags {
@@ -694,12 +723,12 @@
 
   .lead-headline {
     font-family: var(--sans);
-    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
     font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
     color: var(--off-white);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .lead-headline em {
@@ -1407,8 +1436,10 @@
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">CCT</a>
+<nav id="nav">
+  <a href="#" class="nav-logo" id="navLogo" aria-label="Candela Corradin Tessa">
+    <span class="nav-logo__first">Candela</span> <span class="nav-logo__last">Corradin Tessa</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#leadership">Leadership</a></li>
@@ -1432,9 +1463,8 @@
       <span class="tag">AI-Native</span>
     </div>
     <p class="hero-desc fade-up">
-      I lead a remote implementation team shipping client web work on a 24-hour turnaround.
-      My focus is scalable delivery systems, AI-assisted workflows, and the operational
-      scaffolding that lets a small team move like a larger one.
+      I lead a remote implementation team shipping client web work on
+      a 24-hour delivery clock — scalable systems, AI-assisted workflows.
     </p>
   </div>
   <div class="hero-right">
@@ -1468,10 +1498,10 @@
     </div>
 
     <p class="practice-intro">
-      Front-end implementation engineering — <em>working within platform constraints
-      to ship flexible, scalable solutions.</em> Scoped CSS and JavaScript layered into
-      live, component-based environments. No HTML changes, no rebuilds. A discipline
-      built around reusable systems and a 24-hour delivery clock.
+      Front-end implementation engineering — <em>working within platform
+      constraints to ship scalable solutions.</em> Scoped CSS and JavaScript
+      layered into live, component-based environments. No HTML changes.
+      No rebuilds.
     </p>
 
     <!-- DEMO -->
@@ -1578,11 +1608,11 @@
           <h3 class="impl__title">Specificity-safe visual polish on a Tailwind hero</h3>
           <div class="impl__row">
             <p class="impl__label">Challenge</p>
-            <p class="impl__text">A client hero needed visual refinement without restructuring component markup. Tailwind utility classes on the overlay were winning specificity battles, and an <code>overflow: hidden</code> wrapper was clipping a decorative shadow positioned with negative z-index.</p>
+            <p class="impl__text">A client hero needed visual refinement without restructuring markup. Tailwind utilities won specificity battles, and an <code>overflow: hidden</code> wrapper clipped a decorative shadow with negative z-index.</p>
           </div>
           <div class="impl__row">
             <p class="impl__label">Solution</p>
-            <p class="impl__text">Parent-class-prefixed selectors with <code>!important</code> reliably overrode Tailwind. <code>border-radius</code> was relocated to sibling elements instead of the clipping wrapper. Background imagery was layered via a <code>::before</code> pseudo-element with controlled opacity. Zero layout changes.</p>
+            <p class="impl__text">Parent-prefixed selectors with <code>!important</code> overrode Tailwind reliably. <code>border-radius</code> moved to sibling elements. Decorative imagery layered via a <code>::before</code> pseudo-element. Zero layout changes.</p>
           </div>
           <ul class="impl__tags" role="list">
             <li>CSS only</li><li>No HTML changes</li><li>Specificity-safe</li><li>Scoped</li>
@@ -1646,11 +1676,11 @@
           <h3 class="impl__title">SPA-safe interactive behavior on a component platform</h3>
           <div class="impl__row">
             <p class="impl__label">Challenge</p>
-            <p class="impl__text">A page needed interactive behavior that survived client-side route changes and dynamic DOM updates. Naive <code>DOMContentLoaded</code> approaches failed on navigation; event listeners duplicated on re-initialization.</p>
+            <p class="impl__text">Interactive behavior needed to survive client-side route changes and dynamic DOM updates. Naive <code>DOMContentLoaded</code> approaches failed on navigation; listeners duplicated on re-init.</p>
           </div>
           <div class="impl__row">
             <p class="impl__label">Solution</p>
-            <p class="impl__text">A namespaced controller exposed <code>init()</code> and <code>destroy()</code> methods, with idempotency guards via <code>data-*</code> attributes. <code>MutationObserver</code> watched for newly rendered nodes; history API patching caught SPA route changes. Capture-phase listeners with <code>stopImmediatePropagation()</code> superseded existing handlers.</p>
+            <p class="impl__text">A namespaced controller with <code>init()</code> and <code>destroy()</code> methods, idempotency guards via <code>data-*</code> attributes. <code>MutationObserver</code> for late nodes; history API patching for route changes.</p>
           </div>
           <ul class="impl__tags" role="list">
             <li>Vanilla JS</li><li>Idempotent init</li><li>MutationObserver</li><li>SPA-safe</li>
@@ -1704,11 +1734,11 @@
           <h3 class="impl__title">Region-aware content swaps without server rendering</h3>
           <div class="impl__row">
             <p class="impl__label">Challenge</p>
-            <p class="impl__text">A site needed location-aware content swaps without server-side rendering or restructuring markup. An initial implementation using a common geolocation API failed due to CORS restrictions in the browser context.</p>
+            <p class="impl__text">A site needed location-aware content without server-side rendering or markup changes. Standard geolocation APIs failed under browser CORS restrictions.</p>
           </div>
           <div class="impl__row">
             <p class="impl__label">Solution</p>
-            <p class="impl__text">A CORS-compatible geolocation provider was paired with a <code>TreeWalker</code> to traverse and replace text nodes globally based on the resolved region. Changes ran through the standard <code>init()</code>/<code>destroy()</code> lifecycle with <code>MutationObserver</code> coverage for late-rendering content. No new DOM nodes created.</p>
+            <p class="impl__text">A CORS-compatible provider paired with <code>TreeWalker</code> to replace text nodes globally by resolved region. Standard <code>init()</code>/<code>destroy()</code> lifecycle with <code>MutationObserver</code> coverage for late content.</p>
           </div>
           <ul class="impl__tags" role="list">
             <li>Geolocation</li><li>Text-node mutation</li><li>Lifecycle pattern</li><li>No injection</li>
@@ -2232,20 +2262,15 @@
       <div class="lead-narrative">
         <p class="lead-eyebrow">Current role · Rebolt</p>
         <h3 class="lead-headline">
-          Leading a remote team of <em>five</em> site and product specialists
+          Leading <em>five</em> implementation specialists
           on a <em>24-hour</em> delivery clock.
         </h3>
         <p class="lead-body">
-          My team handles high-volume website customization across multiple
-          U.S.-based client accounts on an AI-driven proprietary platform.
-          I translate client requests into scalable implementation solutions —
-          coordinating prioritization, delivery, and quality across customer
-          success, design, and engineering needs.
-        </p>
-        <p class="lead-body" style="margin-top: 1.25rem;">
-          The work is built on reusable override systems, internal code resources,
-          and documentation-first workflows that let a small distributed team
-          operate with minimal supervision and consistent quality.
+          High-volume website customization across multiple U.S.-based client
+          accounts. I translate client requests into scalable implementation
+          systems — reusable overrides, internal code resources, and
+          documentation-first workflows that let a distributed team operate
+          autonomously without losing consistency.
         </p>
       </div>
 
@@ -2269,17 +2294,17 @@
       <div class="lead-pillar">
         <span class="lead-pillar__num">A</span>
         <h4 class="lead-pillar__title">Reusable systems</h4>
-        <p class="lead-pillar__text">Override patterns, snippet libraries, and internal code resources that compound across clients. Every delivery makes the next one faster — and more consistent.</p>
+        <p class="lead-pillar__text">Override patterns and internal code resources that compound. Every delivery makes the next one faster.</p>
       </div>
       <div class="lead-pillar">
         <span class="lead-pillar__num">B</span>
         <h4 class="lead-pillar__title">AI as operational tool</h4>
-        <p class="lead-pillar__text">AI-assisted iteration combined with manual review. Claude embedded into debugging, documentation, and implementation logic — applied to operational scalability, not just creative output.</p>
+        <p class="lead-pillar__text">Claude embedded in debugging, documentation, and implementation logic — paired with manual review for judgment.</p>
       </div>
       <div class="lead-pillar">
         <span class="lead-pillar__num">C</span>
         <h4 class="lead-pillar__title">Documentation-first ops</h4>
-        <p class="lead-pillar__text">Async-by-default workflows. Decision logs, handoff rituals, and internal references that let a distributed team move autonomously — clarity travels, not meetings.</p>
+        <p class="lead-pillar__text">Async-by-default. Decision logs and handoff rituals replace meetings. Clarity travels with the work.</p>
       </div>
     </div>
   </div>
@@ -2436,14 +2461,13 @@
     <div class="about-left">
       <p class="hero-eyebrow" style="margin-bottom: 1.5rem;">Background</p>
       <p style="font-size: 1rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.2rem;">
-        Technical foundations in computer science, applied through a creative
-        technology and multimedia arts lens. The combination shapes how I work:
-        systems and process discipline from one side, design and craft instinct
-        from the other.
+        Technical foundations in computer science, applied through a multimedia
+        arts and creative technology lens. Systems discipline from one side,
+        design instinct from the other.
       </p>
       <p style="font-size: 1rem; line-height: 1.85; color: var(--muted);">
-        I lead implementation work because it sits at the intersection of both —
-        ops rigor and design judgment, working in equal measure on every delivery.
+        Implementation work sits where both meet — ops rigor and design judgment,
+        in equal measure on every delivery.
       </p>
     </div>
     <div class="about-right">
@@ -2537,6 +2561,24 @@
       });
     }, { threshold: 0.4 });
     io.observe(demo);
+  })();
+</script>
+
+<script>
+  // Nav scroll state
+  (function () {
+    const nav = document.getElementById('nav');
+    if (!nav) return;
+    const threshold = 120;
+    function check() {
+      if (window.scrollY > threshold) {
+        nav.classList.add('is-scrolled');
+      } else {
+        nav.classList.remove('is-scrolled');
+      }
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    check();
   })();
 </script>
 
